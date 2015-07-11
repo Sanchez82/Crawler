@@ -65,9 +65,9 @@ public class Main {
 		"http://www.supsi.ch/home/comunica.html",
 		*
 		*/
-	//private static String site = "http://www.supsi.ch/home_en/ricerca.html";
+	private static String site = "http://www.supsi.ch/home_en/ricerca.html";
 	//	private static String site = "http://www.swisscom.com";
-		private static String site = "http://9gag.com";
+		//private static String site = "http://9gag.com";
 	//private static String site = "http://www.google.ch";
 	//private static String site = "http://www.mit.edu";
 	//private static String site = "http://www.w3schools.com";
@@ -78,14 +78,18 @@ public class Main {
 	public static void main(String[] args) throws SQLException, IOException {
 		db.runSql2("TRUNCATE Record;");
 		
-		new Gui(site);
+		//TODO riattivare new Gui(site); 
 		
 		
 		
-//		This part si to test the correct functionig of siteCrawler without GUI
+//		This part is to test the correct functionig of siteCrawler without GUI
 //		SiteCrawler siteCrawler = new SiteCrawler(db);
 //		siteCrawler.setRecursiveOn(100);
 //		siteCrawler.processPage(site);
+		
+		
+		MailCrawler mailCrawlerTest = new MailCrawler(db);
+		mailCrawlerTest.processPage(site);
 		
 //		for(int i = 0; i < mySites.length; i++){
 //			System.out.println("Site: number: "+i+" name: "+mySites[i]);
