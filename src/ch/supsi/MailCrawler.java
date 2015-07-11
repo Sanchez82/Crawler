@@ -10,13 +10,10 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-
+//TODO parsare anche le mail in javascript
 public class MailCrawler {
 
 	private DB db;
-	private boolean isRecursiveSearchOn = false;
-	private int maxSeach;
-	private int count= 0;
 	private int emailNumber=0;
 	
 	public MailCrawler(DB db) {
@@ -25,8 +22,6 @@ public class MailCrawler {
 	}
 
 	public void processPage(String URL) throws SQLException, IOException{
-		//TODO cancellare
-		Main.db.runSql2("TRUNCATE Mail;");
 		
 		//check if the given URL is already in database
 		String sql = "select * from Mail where eMail = '"+URL+"'";
