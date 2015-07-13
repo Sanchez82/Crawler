@@ -35,9 +35,6 @@ public class SiteCrawler {
 	public void processPage(String URL) throws SQLException, IOException{
 		boolean isNotToMaxSites = true;
 		
-		System.out.println(count);
-		count++;
-		
 		//check if the given URL is already in database
 		String sql2 = "SELECT COUNT(*) FROM Record";
 		ResultSet rs2 = db.runSql(sql2);
