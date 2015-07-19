@@ -71,7 +71,8 @@ public class Main {
 		db.runSql2("TRUNCATE Record;");
 		db.runSql2("TRUNCATE Mail;");
 
-		//TODO riattivare new Gui(site); 
+		//TODO riattivare 
+		new Gui(site); 
 
 
 		//		This part is to test the correct functionig of siteCrawler without GUI
