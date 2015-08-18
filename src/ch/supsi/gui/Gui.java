@@ -27,19 +27,23 @@ public class Gui extends JPanel implements ActionListener  {
 
 	
 	private void addComponentsToPane(Container pane){
+		
+		BorderLayout headerLayout = new BorderLayout();
+		JPanel headerPanel = new JPanel(headerLayout);
+		
 			
-		FlowLayout fl = new FlowLayout();
-		JPanel panel1 = new JPanel(fl);
-		pane.add(panel1,  BorderLayout.PAGE_START);
+		FlowLayout searchPaneLayout = new FlowLayout();
+		JPanel searchPanel = new JPanel(searchPaneLayout);
+		pane.add(searchPanel,  BorderLayout.PAGE_START);
 		
 		textField = new JTextField(35);
 		textField.addActionListener(this);
 		textField.setText(startUrl);
-		panel1.add(textField);
+		searchPanel.add(textField);
 		
 		
 		JButton button = new JButton("Search");
-        panel1.add(button);
+        searchPanel.add(button);
         button.addActionListener(this);
         
 		textArea = new JTextArea(5, 20);
