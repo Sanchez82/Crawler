@@ -12,7 +12,10 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
+import ch.supsi.IPRetriver;
 import ch.supsi.MailCrawler;
 import ch.supsi.SiteCrawler;
 
@@ -131,12 +134,17 @@ public class Gui extends JPanel implements ActionListener  {
 	}
 
 	private void search(){
-		try {
-			//Reset DataBase before new search
-			Main.db.runSql2("TRUNCATE Record;");
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		
+		String site = textField.getText();
+		IPRetriver ipr = new IPRetriver(site);
+		ipr.getIP(site);
+		
+//		try {
+//			//Reset DataBase before new search
+//			Main.db.runSql2("TRUNCATE Record;");
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
 		if(isSiteSearchActive){
 			searchSite();
 		}
@@ -149,19 +157,14 @@ public class Gui extends JPanel implements ActionListener  {
 		String site = textField.getText();
 
 		try {
-			//Reset DataBase before new search
-			//Main.db.runSql2("TRUNCATE Record;");
-
 			MailCrawler mailCrawler = new MailCrawler(Main.db);
-			//mailCrawler.setRecursiveOn(100);
 			mailCrawler.processPage(site);
 
 		} catch (SQLException | IOException e) {
 			e.printStackTrace();
 		}
 		textArea.append(site+ newline);
-
-		//		Getting the result sites form teh db and append them to the text area
+		//		Getting the result sites form the db and append them to the text area
 		String sql = "select * from Record";
 		try {
 			ResultSet rs = Main.db.runSql(sql);
@@ -181,6 +184,10 @@ public class Gui extends JPanel implements ActionListener  {
 	}
 	private void searchSite(){
 		
+		//Time started the seach for DB 
+		Calendar cal = Calendar.getInstance();
+		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+		String time = sdf.format(cal.getTime());
 		String site = textField.getText();
 
 		try {
@@ -189,15 +196,16 @@ public class Gui extends JPanel implements ActionListener  {
 
 			SiteCrawler siteCrawler = new SiteCrawler(Main.db);
 			siteCrawler.setRecursiveOn(100);
-			siteCrawler.processPage(site);
+			siteCrawler.processPage(site,time);
 
 		} catch (SQLException | IOException e) {
 			e.printStackTrace();
 		}
-		textArea.append(site+ newline);
+		//fist site
+		//textArea.append(site+ newline);
 
-		//		Getting the result sites form teh db and append them to the text area
-		String sql = "select * from Record";
+		//		Getting the result sites form the db and append them to the text area
+		String sql = "select * from Record where dateSearch like '"+time+"'";;
 		try {
 			ResultSet rs = Main.db.runSql(sql);
 			while(rs.next()){
@@ -215,7 +223,7 @@ public class Gui extends JPanel implements ActionListener  {
 		//Make sure the new text is visible, even if there
 		//was a selection in the text area.
 		textArea.setCaretPosition(textArea.getDocument().getLength());
-		
+		System.out.println("search finished");
 	}
 
 	public Gui(String URL){

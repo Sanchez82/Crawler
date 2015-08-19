@@ -68,8 +68,8 @@ public class Main {
 
 	public static void main(String[] args) throws SQLException, IOException {
 		//Erasing the content on DB
-		db.runSql2("TRUNCATE Record;");
-		db.runSql2("TRUNCATE Mail;");
+		//db.runSql2("TRUNCATE Record;");
+		//db.runSql2("TRUNCATE Mail;");
 
 		//TODO riattivare 
 		new Gui(site); 
