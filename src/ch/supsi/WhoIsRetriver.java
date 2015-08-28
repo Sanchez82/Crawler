@@ -98,8 +98,6 @@ public class WhoIsRetriver {
 		}
 	}
 
-
-
 	/**
 	 * @param query
 	 * This method take the query for the service since every service has his own dictionary 
@@ -122,7 +120,7 @@ public class WhoIsRetriver {
 			// String whoisData1 = whois.query("-i ns 195.176.55.36");
 			//mkyong.com
 		//	String whoisData1 = whois.query(query+"195.176.55.36");
-			String whoisData1 = whois.query(query+"mkyong.com");
+			String whoisData1 = whois.query(query+domainName);
 
 			// append first result
 			result.append(whoisData1);
@@ -149,48 +147,12 @@ public class WhoIsRetriver {
 
 
 	public void getWhois(String domainName) {
-
-		
+	
 		for(int i=0; i<serviceArray.length; i++){
 			String result = getWhois(domainName, serviceArray[i], queryArray[i], portArray[i]);
 			System.out.println(serviceArray[i]);
 			System.out.println(result);
 		}
-
-//		StringBuilder result = new StringBuilder("");
-//		WhoisClient whois = new WhoisClient();
-//		try {
-//
-//			//		  whois.connect(WhoisClient.DEFAULT_HOST);
-//			//		  whois.connect("whois.networksolutions.com",  WhoisClient.DEFAULT_PORT);
-//			whois.connect(this.service, this.port);
-//
-//			// whois =google.com
-//			// String whoisData1 = whois.query("=" + domainName);
-//			// String whoisData1 = whois.query("-i ns 195.176.55.36");
-//			String whoisData1 = whois.query("195.176.55.36");
-//
-//			// append first result
-//			result.append(whoisData1);
-//			whois.disconnect();
-//
-//			// get the google.com whois server - whois.markmonitor.com
-//			String whoisServerUrl = getWhoisServer(whoisData1);
-//			//			if (!whoisServerUrl.equals("")) {
-//			//
-//			//				// whois -h whois.markmonitor.com google.com
-//			//				String whoisData2 = queryWithWhoisServer(domainName, whoisServerUrl);
-//			//
-//			//				// append 2nd result
-//			//				result.append(whoisData2);
-//			//			}
-//
-//		} catch (SocketException e) {
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//		return result.toString();
 	}
 
 	//Parser di Whois 

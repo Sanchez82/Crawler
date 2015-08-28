@@ -231,7 +231,7 @@ public class Gui extends JPanel implements ActionListener  {
 		
 		//Time started the seach for DB 
 		Calendar cal = Calendar.getInstance();
-		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 		time = sdf.format(cal.getTime());
 		String site = textField.getText();
 

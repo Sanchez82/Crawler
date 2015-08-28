@@ -73,7 +73,9 @@ public class SiteCrawler {
 				stmt.setString(1, ip);
 				stmt.execute();	
 				//get the Id of the new entry
+				
 				rs3 = db.runSql(sql);
+				rs3.next();
 				ipId = rs3.getInt(0);
 			}
 			
