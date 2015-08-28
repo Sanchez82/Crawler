@@ -1,6 +1,10 @@
 package ch.supsi;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import org.apache.commons.net.whois.WhoisClient;
 
 import ch.supsi.gui.Gui;
 
@@ -73,7 +77,21 @@ public class Main {
 
 		//TODO riattivare 
 		new Gui(site); 
+		//new WhoIsRetriver("www.google.ch");
+		new WhoisRipe("195.176.55.36", db);
+		
+		
 
+//		PortScannerTest
+		long start = System.currentTimeMillis();
+//		SimpleDateFormat sdf = new SimpleDateFormat("MMM dd,yyyy HH:mm:ss");    
+//		Date resultdate = new Date(start);
+//		System.out.println(sdf.format(resultdate));
+//		//pS.scanPorts("195.176.55.36");
+//		PortScanner pS = new PortScanner();
+//		long end = System.currentTimeMillis();  
+//		Date entdate = new Date(end);
+//		System.out.println(sdf.format(entdate));
 
 		//		This part is to test the correct functionig of siteCrawler without GUI
 		//		SiteCrawler siteCrawler = new SiteCrawler(db);
