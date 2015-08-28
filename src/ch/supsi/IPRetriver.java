@@ -2,23 +2,20 @@ package ch.supsi;
 import java.net.*;
 
 public class IPRetriver {
-
-	private String ip;
-
-	public IPRetriver(String ip) {
-		super();
-		this.ip = ip;
-	}
 	
-	public void getIP(String url){
+	public IPRetriver() {
+		super();
+	}
+
+	public String getIP(String url){
+		String ip = "";
 		try {
 			InetAddress address = InetAddress.getByName(new URL(url).getHost());
-			String ip = address.getHostAddress();
-			System.out.println(ip);
+			ip = address.getHostAddress();
 		} catch (UnknownHostException | MalformedURLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return ip;
 	}
 	
 }

@@ -28,10 +28,6 @@ public class DB {
 		return sta.executeQuery(sql);
 	}
  
-	public boolean runSql2(String sql) throws SQLException {
-		Statement sta = conn.createStatement();
-		return sta.execute(sql);
-	}
  
 	@Override
 	protected void finalize() throws Throwable {

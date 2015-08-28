@@ -11,8 +11,7 @@ import java.util.regex.Pattern;
 import org.apache.commons.net.whois.WhoisClient;
 
 public class WhoIsRetriver {
-	private String service;
-	private int port;
+
 	private DB db;
 
 	private String[] serviceArray;
@@ -29,8 +28,27 @@ public class WhoIsRetriver {
 	}
 
 
-	public WhoIsRetriver(String service, int port, DB db) {
-		this.db = db;
+//	public WhoIsRetriver() {
+//		this.db = Main.db;
+//		try {
+//			initServices();
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		for(int i=0; i<serviceArray.length;i++ ){
+//			System.out.println("Service "+i+" "+serviceArray[i]+" "+ queryArray[i]+" "+ portArray[i]);
+//		}
+//		//		//System.out.println("who is:"+getWhoisInternic("mkyong.com"));
+//		//		System.out.println("who is:"+getWhoisInternic("195.176.55.36"));
+//		//		System.out.println("Done");
+//
+//		//System.out.println(getWhois("195.176.55.36","www.supsi.ch"));
+//		//System.out.println("Done");
+//	}
+	
+	
+	public WhoIsRetriver() {
+		this.db = Main.db;
 		try {
 			initServices();
 		} catch (SQLException e) {
@@ -40,9 +58,7 @@ public class WhoIsRetriver {
 		for(int i=0; i<serviceArray.length;i++ ){
 			System.out.println("Service "+i+" "+serviceArray[i]+" "+ queryArray[i]+" "+ portArray[i]);
 		}
-		
-		this.service = service;
-		this.port = port;
+	
 		//		//System.out.println("who is:"+getWhoisInternic("mkyong.com"));
 		//		System.out.println("who is:"+getWhoisInternic("195.176.55.36"));
 		//		System.out.println("Done");
@@ -97,12 +113,16 @@ public class WhoIsRetriver {
 
 			//		  whois.connect(WhoisClient.DEFAULT_HOST);
 			//		  whois.connect("whois.networksolutions.com",  WhoisClient.DEFAULT_PORT);
-			whois.connect(this.service, this.port);
+			
+			//whois.connect(this.service, this.port);
+			whois.connect(service, port);
 
 			// whois =google.com
 			// String whoisData1 = whois.query("=" + domainName);
 			// String whoisData1 = whois.query("-i ns 195.176.55.36");
-			String whoisData1 = whois.query("195.176.55.36");
+			//mkyong.com
+		//	String whoisData1 = whois.query(query+"195.176.55.36");
+			String whoisData1 = whois.query(query+"mkyong.com");
 
 			// append first result
 			result.append(whoisData1);
@@ -132,7 +152,9 @@ public class WhoIsRetriver {
 
 		
 		for(int i=0; i<serviceArray.length; i++){
-			getWhois(domainName, serviceArray[i], queryArray[i], portArray[i]);
+			String result = getWhois(domainName, serviceArray[i], queryArray[i], portArray[i]);
+			System.out.println(serviceArray[i]);
+			System.out.println(result);
 		}
 
 //		StringBuilder result = new StringBuilder("");
@@ -206,29 +228,29 @@ public class WhoIsRetriver {
 	//	}
 
 
-	//	public String getWhoisInternic(String domainName) {
-	//
-	//		StringBuilder result = new StringBuilder("");
-	//
-	//		WhoisClient whois = new WhoisClient();
-	//		try {
-	//
-	//			//default is internic.net
-	//			//whois.connect(WhoisClient.DEFAULT_HOST);
-	//			//
-	//			//whois.connect("whois.internic.net");
-	//			whois.connect("whois.ripe.net");
-	//			String whoisData1 = whois.query("=" + domainName);
-	//			result.append(whoisData1);
-	//			whois.disconnect();
-	//
-	//		} catch (SocketException e) {
-	//			e.printStackTrace();
-	//		} catch (IOException e) {
-	//			e.printStackTrace();
-	//		}
-	//
-	//		return result.toString();
-	//	}
+		public String getWhoisInternic(String domainName) {
+	
+			StringBuilder result = new StringBuilder("");
+	
+			WhoisClient whois = new WhoisClient();
+			try {
+	
+				//default is internic.net
+				whois.connect(WhoisClient.DEFAULT_HOST);
+				//
+				//whois.connect("whois.internic.net");
+				//whois.connect("whois.ripe.net");
+				String whoisData1 = whois.query("=" + domainName);
+				result.append(whoisData1);
+				whois.disconnect();
+	
+			} catch (SocketException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+	
+			return result.toString();
+		}
 
 }

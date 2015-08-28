@@ -1,13 +1,10 @@
 package ch.supsi;
 
 import java.io.IOException;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -28,11 +25,11 @@ public class SiteCrawler {
 	private DB db;
 	private boolean isRecursiveSearchOn = false;
 	private int maxSeach;
-	private static int count= 0;
+	//private int count= 0;
 
-	public SiteCrawler(DB db) {
+	public SiteCrawler() {
 		super();
-		this.db = db;
+		this.db = Main.db;
 	}
 
 	public void processPage(String URL, String searchTime) throws SQLException, IOException{
@@ -55,25 +52,48 @@ public class SiteCrawler {
 		}
 		//here if the query sql has a result id means that the site is already in the data base;
 		if(rs.next()){
-			count--;
-			
+//			count--;
 		}else if(isNotToMaxSites){
 		
+			//get the ip Adress of the URL
+			IPRetriver ipR = new IPRetriver();
+			String ip = ipR.getIP(URL);
+			
+			System.out.println("URL: "+ URL+ " ip: "+ ip);
+			sql = "SELECT * FROM `crawlerDB`.`IPadress` where IP = '"+ip+"'";
+			ResultSet rs3 = db.runSql(sql);
+			//if true the ip already in the database if not the add to new IP to the DB
+			int ipId;
+			if(rs3.next()){
+				ipId = rs3.getInt(1);
+			}else{
+				//store the URL to database to avoid parsing again
+				sql = "INSERT INTO  `crawlerDB`.`IPadress` " + "(`IP`) VALUES " + "(?);";
+				PreparedStatement stmt = db.conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+				stmt.setString(1, ip);
+				stmt.execute();	
+				//get the Id of the new entry
+				rs3 = db.runSql(sql);
+				ipId = rs3.getInt(0);
+			}
+			
+			
 			//store the URL to database to avoid parsing again
-			sql = "INSERT INTO  `crawlerDB`.`Record` " + "(`URL`, `dateSearch`) VALUES " + "(?,?);";
+			sql = "INSERT INTO  `crawlerDB`.`Record` " + "(`URL`, `dateSearch`, `fkIp`) VALUES " + "(?,?,?);";
 			PreparedStatement stmt = db.conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			stmt.setString(1, URL);
 			stmt.setString(2, searchTime);
+			stmt.setInt(3, ipId);
 			stmt.execute();
 
 			//get useful information
 			try{
 				Document doc = Jsoup.connect(URL).get();
-				Elements questions = doc.select("a[href]");
+				Elements sites = doc.select("a[href]");
 
-				for(Element link: questions){
+				for(Element link: sites){
 					if(link.attr("href").contains("http")){
-						System.out.println(link.attr("href"));
+						//System.out.println(link.attr("href"));
 					}
 					if(isRecursiveSearchOn){
 						processPage(link.attr("abs:href"), searchTime);

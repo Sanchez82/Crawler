@@ -11,14 +11,15 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 //TODO parsare anche le mail in javascript
+
 public class MailCrawler {
 
 	private DB db;
 	private int emailNumber=0;
 
-	public MailCrawler(DB db) {
+	public MailCrawler() {
 		super();
-		this.db = db;
+		this.db = Main.db;
 	}
 
 	public void processPage(String URL) throws SQLException, IOException{
