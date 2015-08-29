@@ -10,9 +10,9 @@ import java.util.concurrent.Future;
 
 public class PortScanner {
 
-	public PortScanner() {
+	public PortScanner(String iptoScan) {
 		final ExecutorService es = Executors.newFixedThreadPool(100);
-		final String ip = "127.0.0.1";
+		final String ip = iptoScan;
 		final int timeout = 200;
 		final List<Future<Boolean>> futures = new ArrayList<>();
 		for (int port = 1; port <= 65535; port++) {

@@ -15,6 +15,7 @@ import java.util.Calendar;
 
 import ch.supsi.IPRetriver;
 import ch.supsi.MailCrawler;
+import ch.supsi.PortScanner;
 import ch.supsi.SiteCrawler;
 import ch.supsi.WhoIsRetriver;
 
@@ -26,7 +27,7 @@ import ch.supsi.Main;
 public class Gui extends JPanel implements ActionListener  {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	protected JTextField textField;
 	protected JTextArea textArea;
 	private String startUrl;
@@ -34,6 +35,7 @@ public class Gui extends JPanel implements ActionListener  {
 	private Boolean isEmailSearchActive = true;
 	private Boolean isSiteSearchActive = true;
 	private Boolean isWhoIsActive = true;
+	private Boolean isPortScanningActive = true;
 	String time;
 
 
@@ -67,6 +69,7 @@ public class Gui extends JPanel implements ActionListener  {
 		JCheckBox emailCheck;
 		JCheckBox websiteCheck;
 		JCheckBox whoisCheck;
+		JCheckBox portScannerCheck;
 
 		emailCheck = new JCheckBox("email");
 		emailCheck.setMnemonic(KeyEvent.VK_C);
@@ -79,16 +82,23 @@ public class Gui extends JPanel implements ActionListener  {
 		websiteCheck.setSelected(true);
 		websiteCheck.setActionCommand("SITE");
 		websiteCheck.addActionListener(this);
-		
+
 		whoisCheck = new JCheckBox("whois");
 		whoisCheck.setMnemonic(KeyEvent.VK_C);
 		whoisCheck.setSelected(true);
 		whoisCheck.setActionCommand("WHOIS");
 		whoisCheck.addActionListener(this);
 
+		portScannerCheck = new JCheckBox("port scanner");
+		portScannerCheck.setMnemonic(KeyEvent.VK_C);
+		portScannerCheck.setSelected(true);
+		portScannerCheck.setActionCommand("PORT");
+		portScannerCheck.addActionListener(this);
+
 		optionPanel.add(emailCheck);
 		optionPanel.add(websiteCheck);
 		optionPanel.add(whoisCheck);
+		optionPanel.add(portScannerCheck);
 
 		//Text Area
 		textArea = new JTextArea(5, 20);
@@ -123,7 +133,7 @@ public class Gui extends JPanel implements ActionListener  {
 	}
 
 	public void actionPerformed(ActionEvent evt) {
-		
+
 
 		if (evt.getActionCommand() == "SEARCH") {
 			search();
@@ -133,36 +143,39 @@ public class Gui extends JPanel implements ActionListener  {
 			}else{
 				isSiteSearchActive = true;
 			}
-			System.out.println("site "+isSiteSearchActive);
 		}else if(evt.getActionCommand() == "EMAIL"){
 			if(isEmailSearchActive){
 				isEmailSearchActive = false;
 			}else{
 				isEmailSearchActive = true;
 			}
-			System.out.println("email "+isEmailSearchActive);
 		}else if(evt.getActionCommand() == "WHOIS"){
 			if(isWhoIsActive){
 				isWhoIsActive = false;
 			}else{
 				isWhoIsActive = true;
 			}
-			System.out.println("whois "+isWhoIsActive);
+		}else if(evt.getActionCommand() == "PORT"){
+			if(isPortScanningActive){
+				isPortScanningActive = false;
+			}else{
+				isPortScanningActive = true;
 			}
+		}
 	}
 
 	private void search(){
-		
+
 		String site = textField.getText();
 		IPRetriver ipr = new IPRetriver();
 		ipr.getIP(site);
-		
-//		try {
-//			//Reset DataBase before new search
-//			Main.db.runSql2("TRUNCATE Record;");
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
+
+		//		try {
+		//			//Reset DataBase before new search
+		//			Main.db.runSql2("TRUNCATE Record;");
+		//		} catch (SQLException e) {
+		//			e.printStackTrace();
+		//		}
 		if(isSiteSearchActive){
 			searchSite();
 		}
@@ -171,8 +184,31 @@ public class Gui extends JPanel implements ActionListener  {
 		}if(isWhoIsActive){
 			searchWhoIs();
 		}
+		if(isPortScanningActive){
+			ScanPorts();
+		}
 	}
-	
+
+	private void ScanPorts() {
+		try {
+			String sql = "SELECT fkIp FROM Record where dateSearch like '"+time+"'"
+					+ "GROUP BY fkIP "
+					+ "ORDER BY COUNT(*) DESC "
+					+ "LIMIT 0,1";
+			ResultSet rs = Main.db.runSql(sql);
+			rs.next();
+		
+			String ipAdress = "SELECT IP FROM `crawlerDB`.`IPadress` where idIPadress = "+rs.getString(1);
+
+			ResultSet rs2 = Main.db.runSql(ipAdress);
+			rs2.next();
+			new PortScanner(rs2.getString(1));
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 	/**
 	 * This method look for the most present ip and do the whois protocol
 	 */
@@ -184,15 +220,15 @@ public class Gui extends JPanel implements ActionListener  {
 					+ "LIMIT 0,1";
 			ResultSet rs = Main.db.runSql(sql);
 			rs.next();
-			//System.out.println("THE DOCTOR: "+rs.getString(1));
+		
 			String ipAdress = "SELECT IP FROM `crawlerDB`.`IPadress` where idIPadress = "+rs.getString(1);
-			
+
 			ResultSet rs2 = Main.db.runSql(ipAdress);
 			rs2.next();
-			//System.out.println("THE DOCTOR WHO: "+rs2.getString(1));
+			
 			WhoIsRetriver DrWho = new WhoIsRetriver();
 			DrWho.getWhois(rs2.getString(1));
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -218,24 +254,20 @@ public class Gui extends JPanel implements ActionListener  {
 				textArea.append(rs.getString("URL")+ newline);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		//textField.selectAll();
-		//Make sure the new text is visible, even if there
-		//was a selection in the text area.
 		textArea.setCaretPosition(textArea.getDocument().getLength());	
 	}
 	private void searchSite(){
-		
+
 		//Time started the seach for DB 
 		Calendar cal = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 		time = sdf.format(cal.getTime());
 		String site = textField.getText();
 
-		
+
 		try {
 			SiteCrawler siteCrawler = new SiteCrawler();
 			siteCrawler.setRecursiveOn(100);
@@ -244,19 +276,15 @@ public class Gui extends JPanel implements ActionListener  {
 		} catch (SQLException | IOException e) {
 			e.printStackTrace();
 		}
-		//fist site
-		//textArea.append(site+ newline);
 
 		//		Getting the result sites form the db and append them to the text area
 		String sql = "select * from Record where dateSearch like '"+time+"'";;
 		try {
 			ResultSet rs = Main.db.runSql(sql);
 			while(rs.next()){
-				//	String t =  rs.getString("URL");
 				textArea.append(rs.getString("URL")+ newline);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		textArea.setCaretPosition(textArea.getDocument().getLength());
@@ -266,7 +294,6 @@ public class Gui extends JPanel implements ActionListener  {
 	public Gui(String URL){
 		super(new GridBagLayout());
 		this.startUrl = URL;
-		//Schedule a job for the event-dispatching thread:
 
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
