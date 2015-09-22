@@ -52,10 +52,11 @@ public class WhoIsRetriver {
 		try {
 			initServices();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		for(int i=0; i<serviceArray.length;i++ ){
+			//to keep track of the services
 			System.out.println("Service "+i+" "+serviceArray[i]+" "+ queryArray[i]+" "+ portArray[i]);
 		}
 	
@@ -146,13 +147,16 @@ public class WhoIsRetriver {
 	}
 
 
-	public void getWhois(String domainName) {
-	
+	public String getWhois(String domainName) {
+		String  result = "";
 		for(int i=0; i<serviceArray.length; i++){
-			String result = getWhois(domainName, serviceArray[i], queryArray[i], portArray[i]);
-			System.out.println(serviceArray[i]);
-			System.out.println(result);
+			String temp = getWhois(domainName, serviceArray[i], queryArray[i], portArray[i]);
+			//System.out.println(serviceArray[i]);
+			
+			result = result + temp;
 		}
+		return result;
+		
 	}
 
 	//Parser di Whois 

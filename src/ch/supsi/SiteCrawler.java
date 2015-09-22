@@ -59,7 +59,7 @@ public class SiteCrawler {
 			IPRetriver ipR = new IPRetriver();
 			String ip = ipR.getIP(URL);
 			
-			System.out.println("URL: "+ URL+ " ip: "+ ip);
+//			System.out.println("URL: "+ URL+ " ip: "+ ip);
 			sql = "SELECT * FROM `crawlerDB`.`IPadress` where IP = '"+ip+"'";
 			ResultSet rs3 = db.runSql(sql);
 			//if true the ip already in the database if not the add to new IP to the DB

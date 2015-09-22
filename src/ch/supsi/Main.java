@@ -33,7 +33,9 @@ public class Main {
 	};
 
 
-	private static String site = "http://www.supsi.ch/home_en/ricerca.html";
+	//private static String site = "http://www.supsi.ch/home_en/ricerca.html";
+	private static String site = "http://f-diamante.ch/";
+
 	//	private static String site = "http://www.swisscom.com";
 	//	private static String site = "http://9gag.com";
 	//	private static String site = "http://www.google.ch";
@@ -45,15 +47,22 @@ public class Main {
 
 	public static void main(String[] args) throws SQLException, IOException {
 
-		//TODO riattivare 
 		new Gui(site); 
+		ScytheJava sJ = new ScytheJava();
+		//sJ.scytheSocial();
+		sJ.scytheCommerce();
+		
+		
+//		PeopleSearch ps = new PeopleSearch();
+		//ps.searchLinkedin("Sascha", "Dominguez");
+//		ps.searchLinkedin("Sandro", "Pedrazzini");
+//		ps.searchLocal("Sandro", "Pedrazzini");
+//		
 		//new WhoIsRetriver("www.google.ch");
 //		http://www.fernfachhochschule.ch/ffhs
 //			http://www.teatrodimitri.ch/scuola/?lang=en
 //			http://www.swissuniversities.ch
 //		
-		IPRetriver asd= new IPRetriver();
-		System.out.println(asd.getIP("http://www.teatrodimitri.ch/scuola/?lang=en"));
 		
 		
 //		WhoIsRetriver DrWho = new WhoIsRetriver();
