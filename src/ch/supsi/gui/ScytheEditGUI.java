@@ -105,9 +105,8 @@ public class ScytheEditGUI extends JFrame implements ActionListener{
 	
 	private void save() {
 		try {
-
 			String content = textArea.getText();
-			File file = new File("filename.txt");
+			File file = new File("accountfile.txt");
 			// if file doesnt exists, then create it
 			if (!file.exists()) {
 				file.createNewFile();

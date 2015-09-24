@@ -203,8 +203,7 @@ public class Gui extends JPanel implements ActionListener {
 		scrollPaneScythe.setPreferredSize(new Dimension(xdim, ydim));
 		scynthePanel.add(scrollPaneScythe, BorderLayout.CENTER);
 		
-		
-		//scytheOption
+		// scytheOption
 		
 		// option scytheButton
 		
@@ -229,9 +228,63 @@ public class Gui extends JPanel implements ActionListener {
 		scytheOptions.add("blogs");
 		scytheOptions.add("email");	
 		
-		for(int i=0; i<scytheOptions.size(); i++){
-			scytheOptionPanel.add(createCheckBox(scytheOptions.get(i)));
-		}
+		JCheckBox socialCheck = new JCheckBox("social");
+		socialCheck.setMnemonic(KeyEvent.VK_C);
+		socialCheck.setSelected(true);
+		socialCheck.setActionCommand("SOCIAL");
+		socialCheck.addActionListener(this);
+		
+		JCheckBox mediaCheck = new JCheckBox("media");
+		mediaCheck.setMnemonic(KeyEvent.VK_C);
+		mediaCheck.setSelected(false);
+		mediaCheck.setActionCommand("MEDIA");
+		mediaCheck.addActionListener(this);
+		
+		JCheckBox forumsCheck = new JCheckBox("forums");
+		forumsCheck.setMnemonic(KeyEvent.VK_C);
+		forumsCheck.setSelected(false);
+		forumsCheck.setActionCommand("FORUM");
+		forumsCheck.addActionListener(this);
+		
+		JCheckBox developmentCheck = new JCheckBox("development");
+		developmentCheck.setMnemonic(KeyEvent.VK_C);
+		developmentCheck.setSelected(false);
+		developmentCheck.setActionCommand("DEVELOPMENT");
+		developmentCheck.addActionListener(this);
+		
+		JCheckBox commerceCheck = new JCheckBox("commerce");
+		commerceCheck.setMnemonic(KeyEvent.VK_C);
+		commerceCheck.setSelected(false);
+		commerceCheck.setActionCommand("COMMERCE");
+		commerceCheck.addActionListener(this);
+		
+		JCheckBox blogsCheck = new JCheckBox("blogs");
+		blogsCheck.setMnemonic(KeyEvent.VK_C);
+		blogsCheck.setSelected(false);
+		blogsCheck.setActionCommand("BLOGS");
+		blogsCheck.addActionListener(this);
+		
+		JCheckBox scytheemailCheck = new JCheckBox("email");
+		scytheemailCheck.setMnemonic(KeyEvent.VK_C);
+		scytheemailCheck.setSelected(false);
+		scytheemailCheck.setActionCommand("EMAILSCYTHE");
+		scytheemailCheck.addActionListener(this);
+		
+		//TODO
+		
+//		for(int i=0; i<scytheOptions.size(); i++){
+//			scytheOptionPanel.add(createCheckBox(scytheOptions.get(i)));
+//		}
+		
+		scytheOptionPanel.add(socialCheck);
+		scytheOptionPanel.add(mediaCheck);
+		scytheOptionPanel.add(forumsCheck);
+		scytheOptionPanel.add(developmentCheck);
+		scytheOptionPanel.add(commerceCheck);
+		scytheOptionPanel.add(blogsCheck);
+		scytheOptionPanel.add(scytheemailCheck);
+		
+		
 		scytheOptionPanel.add(editListButton);
 		scytheOptionPanel.add(testList);
 			
@@ -382,25 +435,21 @@ public class Gui extends JPanel implements ActionListener {
 		return panel;
 	}
 
-
+//TODO sistemare qui
 	public void actionPerformed(ActionEvent evt) {
 
 		if (evt.getActionCommand() == "SEARCH") {
 			search();
-		} else if(evt.getActionCommand() == "EDITLIST"){
-			//apro la finestra con dentro le info di accountfile.txt
+		}else if(evt.getActionCommand() == "EDITLIST"){
 			new ScytheEditGUI();
-			
 		}else if(evt.getActionCommand() == "TESTLIST"){
-			//TODO fare partire scyte in funzione delle flags
 			scytheSearch();
 			try {
 				getDataOnReultScytheFile();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}	else if(evt.getActionCommand() == "SITE"){
+		}else if(evt.getActionCommand() == "SITE"){
 			if(isSiteSearchActive){
 				isSiteSearchActive = false;
 			}else{
@@ -460,7 +509,7 @@ public class Gui extends JPanel implements ActionListener {
 			}else{
 				scytheBlogsIsActive = true;
 			}
-		}else if(evt.getActionCommand() == "EMAIL"){
+		}else if(evt.getActionCommand() == "EMAILSCYTHE"){
 			if(scytheEmailIsActive){
 				scytheEmailIsActive = false;
 			}else{
@@ -471,6 +520,7 @@ public class Gui extends JPanel implements ActionListener {
 
 	private void scytheSearch() {
 //		social media forums development "commerce blogs email");
+		scytheTextArea.setText("");
 		ScytheJava sj = new ScytheJava();
 		if(scytheSocialisActive){
 			sj.scytheSocial();
@@ -495,8 +545,6 @@ public class Gui extends JPanel implements ActionListener {
 		}
 	}
 
-
-
 	private void getDataOnReultScytheFile() throws IOException {
 		ArrayList<String> categories = new ArrayList<String>(Arrays.asList("social", "media", "forums", "development", "commerce", "blogs", "email"));
 		
@@ -511,15 +559,6 @@ public class Gui extends JPanel implements ActionListener {
 			}
 			br.close();
 		}
-//		BufferedReader br = new BufferedReader(new FileReader("result.txt"));
-//		// StringBuilder sb = new StringBuilder();
-//		String line = br.readLine();
-//		while (line != null) {
-//			scytheTextArea.append(line);
-//			scytheTextArea.append(System.lineSeparator());
-//			line = br.readLine();
-//		}
-//		br.close();
 	}
 
 	private void search(){

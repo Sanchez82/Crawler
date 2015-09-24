@@ -1,6 +1,9 @@
 package ch.supsi;
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import ch.supsi.gui.Gui;
 
@@ -47,10 +50,8 @@ public class Main {
 
 	public static void main(String[] args) throws SQLException, IOException {
 
-		new Gui(site); 
-		ScytheJava sJ = new ScytheJava();
-		//sJ.scytheSocial();
-		//sJ.scytheCommerce();
+		new Gui(site);
+		initScytheFile();
 		
 		
 //		PeopleSearch ps = new PeopleSearch();
@@ -96,5 +97,21 @@ public class Main {
 		//			processPage(mySites[i]);
 		//		}
 
+	}
+
+	private static void initScytheFile() {
+		//social media forums development "commerce blogs email");
+		ArrayList<String> categories = new ArrayList<String>(Arrays.asList("social", "media", "forums", "development", "commerce", "blogs", "email"));
+		for(int i = 0; i< categories.size(); i++){
+			File file = new File("result"+categories.get(i)+".txt");
+			// if file doesnt exists, then create it
+			if (!file.exists()) {
+				try {
+					file.createNewFile();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}	
 	}
 }
