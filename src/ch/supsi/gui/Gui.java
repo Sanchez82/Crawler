@@ -32,6 +32,7 @@ import javax.swing.*;
 import ch.supsi.Main;        
 
 
+
 public class Gui extends JPanel implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
@@ -48,7 +49,6 @@ public class Gui extends JPanel implements ActionListener {
 	private JTextArea portScannerTextArea;
 	private JTextArea peopleSearchTextArea;
 
-
 	private JButton button;
 
 	private String startUrl;
@@ -61,8 +61,11 @@ public class Gui extends JPanel implements ActionListener {
 	private ArrayList<String> mails;
 
 	private JTextArea scytheTextArea;
-
-
+	private int xdim = 200;
+	private int ydim = 100;
+	private int windowsX = 850;
+	private int windowsY = 750;
+	
 	private void addComponentsToPane(Container pane){
 
 		//Header
@@ -99,7 +102,7 @@ public class Gui extends JPanel implements ActionListener {
 		button.addActionListener(this);
 
 		//Option Panel
-		FlowLayout optionLayout = new FlowLayout(FlowLayout.LEFT);
+		FlowLayout optionLayout = new FlowLayout(FlowLayout.LEFT );
 		JPanel optionPanel = new JPanel(optionLayout);
 		headerPanel.add(optionPanel,  BorderLayout.CENTER);
 
@@ -143,7 +146,7 @@ public class Gui extends JPanel implements ActionListener {
 		siteTextArea = new JTextArea(5, 20);
 		siteTextArea.setEditable(false);
 		JScrollPane scrollPane = new JScrollPane(siteTextArea);
-		scrollPane.setPreferredSize(new Dimension(200, 100));
+		scrollPane.setPreferredSize(new Dimension(xdim, ydim));
 		//pane.add(scrollPane, BorderLayout.CENTER);
 
 
@@ -151,7 +154,7 @@ public class Gui extends JPanel implements ActionListener {
 		mailTextArea = new JTextArea(5, 20);
 		mailTextArea.setEditable(false);
 		JScrollPane scrollPaneMail = new JScrollPane(mailTextArea);
-		scrollPaneMail.setPreferredSize(new Dimension(200, 100));
+		scrollPaneMail.setPreferredSize(new Dimension(xdim, ydim));
 		pane.add(scrollPaneMail, BorderLayout.CENTER);
 
 
@@ -159,21 +162,21 @@ public class Gui extends JPanel implements ActionListener {
 		whoIsTextArea = new JTextArea(5, 20);
 		whoIsTextArea.setEditable(false);
 		JScrollPane scrollPaneWhois = new JScrollPane(whoIsTextArea);
-		scrollPaneWhois.setPreferredSize(new Dimension(200, 100));
+		scrollPaneWhois.setPreferredSize(new Dimension(xdim, ydim));
 		pane.add(scrollPaneWhois, BorderLayout.CENTER);
 
 		//port Scanner
 		portScannerTextArea = new JTextArea(5, 20);
 		portScannerTextArea.setEditable(false);
 		JScrollPane scrolloPaneportScanner = new JScrollPane(portScannerTextArea);
-		scrolloPaneportScanner.setPreferredSize(new Dimension(200, 100));
+		scrolloPaneportScanner.setPreferredSize(new Dimension(xdim, ydim));
 		pane.add(scrolloPaneportScanner, BorderLayout.CENTER);
 
 		//port PeopleSearch
 		peopleSearchTextArea = new JTextArea(5, 20);
 		peopleSearchTextArea.setEditable(false);
 		JScrollPane scrollPanePeopleSearch  = new JScrollPane(peopleSearchTextArea);
-		scrollPanePeopleSearch.setPreferredSize(new Dimension(200, 100));
+		scrollPanePeopleSearch.setPreferredSize(new Dimension(xdim, ydim));
 		pane.add(scrollPanePeopleSearch, BorderLayout.CENTER);
 		
 		//scythe
@@ -182,14 +185,26 @@ public class Gui extends JPanel implements ActionListener {
 		BorderLayout scyntheLayout = new BorderLayout();
 		JPanel scynthePanel = new JPanel(scyntheLayout);
 		
-		
 		scytheTextArea = new JTextArea(5, 20);
 		scytheTextArea.setEditable(false);
 		JScrollPane scrollPaneScythe  = new JScrollPane(scytheTextArea);
-		scrollPaneScythe.setPreferredSize(new Dimension(200, 100));
+		scrollPaneScythe.setPreferredSize(new Dimension(xdim, ydim));
 		scynthePanel.add(scrollPaneScythe, BorderLayout.CENTER);
 		
-		//scytheOptionCheckBoxes
+		
+		//scytheOption
+		
+		// option scytheButton
+		
+		JButton editListButton = new JButton("edit list");
+		editListButton.setActionCommand("EDITLIST");
+		editListButton.addActionListener(this);
+		
+		JButton testList = new JButton("test list");
+		testList.setActionCommand("TESTLIST");
+		testList.addActionListener(this);
+		
+		//option checkbox
 		FlowLayout scytheOptionLayout = new FlowLayout();
 		JPanel scytheOptionPanel = new JPanel(scytheOptionLayout);
 		
@@ -205,10 +220,10 @@ public class Gui extends JPanel implements ActionListener {
 		for(int i=0; i<scytheOptions.size(); i++){
 			scytheOptionPanel.add(createCheckBox(scytheOptions.get(i)));
 		}
-		
-		scynthePanel.add(scytheOptionPanel, BorderLayout.PAGE_START);
-		//pane.add(scynthePanel, BorderLayout.PAGE_START);
-		
+		scytheOptionPanel.add(editListButton);
+		scytheOptionPanel.add(testList);
+			
+		scynthePanel.add(scytheOptionPanel, BorderLayout.PAGE_START);	
 		//Result Tab
 
 		JTabbedPane tabbedPane = new JTabbedPane();
@@ -293,7 +308,7 @@ public class Gui extends JPanel implements ActionListener {
 		addComponentsToPane(frame.getContentPane());
 
 		// Display the window.
-		frame.setSize(650, 700);
+		frame.setSize(windowsX, windowsY);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
@@ -386,7 +401,16 @@ public class Gui extends JPanel implements ActionListener {
 			}else{
 				isPortScanningActive = true;
 			}
+		}else if(evt.getActionCommand() == "EDITLIST"){
+			//apro la finestra con dentro le info di accountfile.txt
+			new ScytheEditGUI();
+			
+		}else if(evt.getActionCommand() == "TESTLIST"){
+			//TODO fare partire scyte in funzione delle flags
 		}
+		
+		
+			
 	}
 
 

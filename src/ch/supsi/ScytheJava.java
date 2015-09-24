@@ -1,7 +1,4 @@
 package ch.supsi;
-
-import org.python.compiler.Module;
-import org.python.core.PyCode;
 import org.python.core.PyString;
 import org.python.core.PySystemState;
 import org.python.util.PythonInterpreter;
@@ -30,8 +27,7 @@ public class ScytheJava {
 	public void scytheSocial() {
 		scytheCategory("social");
 		//state.argv.append (new PyString ("--single=facebook.com"));
-	}
-	
+	}	
 	public void scytheMedia(){
 		scytheCategory("media");
 	}
