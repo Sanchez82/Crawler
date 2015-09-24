@@ -1,5 +1,7 @@
 package ch.supsi;
 
+import org.python.compiler.Module;
+import org.python.core.PyCode;
 import org.python.core.PyString;
 import org.python.core.PySystemState;
 import org.python.util.PythonInterpreter;
@@ -15,8 +17,13 @@ public class ScytheJava {
 		PySystemState state = new PySystemState();
 		state.argv.append (new PyString ("--category="+category));
 		state.argv.append (new PyString ("--accountfile=accountfile.txt"));
+		state.argv.append (new PyString ("--output=result.txt"));
 		interpreter = new PythonInterpreter(null, state);
-		interpreter.execfile("scythe.py"); 	
+		interpreter.execfile("scythe.py"); 
+//		PyCode m = interpreter.compile("scythe.py");
+//		m.
+//		String s = "ciao";
+//		System.out.println(interpreter.compile("scythe.py")+s); 
 	}
 	
 	public void scytheSocial() {

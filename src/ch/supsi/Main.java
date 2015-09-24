@@ -49,8 +49,8 @@ public class Main {
 
 		new Gui(site); 
 		ScytheJava sJ = new ScytheJava();
-		//sJ.scytheSocial();
-		sJ.scytheCommerce();
+		sJ.scytheSocial();
+		//sJ.scytheCommerce();
 		
 		
 //		PeopleSearch ps = new PeopleSearch();
