@@ -49,7 +49,7 @@ public class Main {
 
 		new Gui(site); 
 		ScytheJava sJ = new ScytheJava();
-		sJ.scytheSocial();
+		//sJ.scytheSocial();
 		//sJ.scytheCommerce();
 		
 		

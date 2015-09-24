@@ -17,9 +17,10 @@ public class ScytheJava {
 		PySystemState state = new PySystemState();
 		state.argv.append (new PyString ("--category="+category));
 		state.argv.append (new PyString ("--accountfile=accountfile.txt"));
-		state.argv.append (new PyString ("--output=result.txt"));
+		state.argv.append (new PyString ("--output=result1.txt"));
 		interpreter = new PythonInterpreter(null, state);
 		interpreter.execfile("scythe.py"); 
+		interpreter.close();
 //		PyCode m = interpreter.compile("scythe.py");
 //		m.
 //		String s = "ciao";

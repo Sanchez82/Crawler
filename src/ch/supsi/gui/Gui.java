@@ -60,6 +60,8 @@ public class Gui extends JPanel implements ActionListener {
 	private String time;
 	private ArrayList<String> mails;
 
+	private JTextArea scytheTextArea;
+
 
 	private void addComponentsToPane(Container pane){
 
@@ -172,9 +174,34 @@ public class Gui extends JPanel implements ActionListener {
 		JScrollPane scrollPanePeopleSearch  = new JScrollPane(peopleSearchTextArea);
 		scrollPanePeopleSearch.setPreferredSize(new Dimension(200, 100));
 		pane.add(scrollPanePeopleSearch, BorderLayout.CENTER);
-
-
-
+		
+		//scythe
+		scytheTextArea = new JTextArea(5, 20);
+		scytheTextArea.setEditable(false);
+		//TODO sistemare le parte grafica
+		JScrollPane scrollPaneScythe  = new JScrollPane(scytheTextArea);
+		scrollPaneScythe.setPreferredSize(new Dimension(200, 100));
+		pane.add(scrollPaneScythe, BorderLayout.CENTER);
+		
+		//scytheOptionCheckBoxes
+		FlowLayout scytheOptionLayout = new FlowLayout();
+		JPanel scytheOptionPanel = new JPanel(scytheOptionLayout);
+		
+		ArrayList<String> scytheOptions = new ArrayList<String>();
+		scytheOptions.add("social");
+		scytheOptions.add("media");
+		scytheOptions.add("forums");
+		scytheOptions.add("development");
+		scytheOptions.add("commerce");
+		scytheOptions.add("blogs");
+		scytheOptions.add("email");	
+		
+		for(int i=0; i<scytheOptions.size(); i++){
+			scytheOptionPanel.add(createCheckBox(scytheOptions.get(i)));
+		}
+		
+		
+		
 		//Result Tab
 
 		JTabbedPane tabbedPane = new JTabbedPane();
@@ -192,6 +219,9 @@ public class Gui extends JPanel implements ActionListener {
 
 		tabbedPane.addTab("People Info", scrollPanePeopleSearch);
 		tabbedPane.setMnemonicAt(4, KeyEvent.VK_5);
+		
+		tabbedPane.addTab("Scythe", scrollPaneScythe);
+		tabbedPane.setMnemonicAt(5, KeyEvent.VK_6);
 
 //		tabbedPane.addTab("Images", initImagePanel());
 //		tabbedPane.setMnemonicAt(5, KeyEvent.VK_6);
@@ -227,6 +257,20 @@ public class Gui extends JPanel implements ActionListener {
 		footerPanel.add(empty3, BorderLayout.LINE_START);
 		footerPanel.add(empty4, BorderLayout.LINE_END);
 	}
+
+	
+	
+	private JCheckBox createCheckBox(String name) {
+		JCheckBox t;
+		t = new JCheckBox(name);
+		t.setMnemonic(KeyEvent.VK_C);
+		t.setSelected(true);
+		t.setActionCommand(name.toUpperCase());
+		t.addActionListener(this);	
+		return t;
+	}
+	
+	
 
 	private void createAndShowGUI() {
 
