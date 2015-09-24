@@ -68,6 +68,7 @@ public class Gui extends JPanel implements ActionListener {
 		//Header
 		BorderLayout headerLayout = new BorderLayout();
 		JPanel headerPanel = new JPanel(headerLayout);
+		headerPanel.setAlignmentX(JScrollPane.LEFT_ALIGNMENT);
 		pane.add(headerPanel, BorderLayout.PAGE_START);
 
 		//Footer
@@ -98,7 +99,7 @@ public class Gui extends JPanel implements ActionListener {
 		button.addActionListener(this);
 
 		//Option Panel
-		FlowLayout optionLayout = new FlowLayout();
+		FlowLayout optionLayout = new FlowLayout(FlowLayout.LEFT);
 		JPanel optionPanel = new JPanel(optionLayout);
 		headerPanel.add(optionPanel,  BorderLayout.CENTER);
 
@@ -176,13 +177,17 @@ public class Gui extends JPanel implements ActionListener {
 		pane.add(scrollPanePeopleSearch, BorderLayout.CENTER);
 		
 		//scythe
-		scytheTextArea = new JTextArea(5, 20);
-		scytheTextArea.setEditable(false);
 		//TODO sistemare le parte grafica!!! Ricordati di generare un file diverso per ogni ricerca scythe altrimenti il nuovo 
 		//cancella il precedente
+		BorderLayout scyntheLayout = new BorderLayout();
+		JPanel scynthePanel = new JPanel(scyntheLayout);
+		
+		
+		scytheTextArea = new JTextArea(5, 20);
+		scytheTextArea.setEditable(false);
 		JScrollPane scrollPaneScythe  = new JScrollPane(scytheTextArea);
 		scrollPaneScythe.setPreferredSize(new Dimension(200, 100));
-		pane.add(scrollPaneScythe, BorderLayout.CENTER);
+		scynthePanel.add(scrollPaneScythe, BorderLayout.CENTER);
 		
 		//scytheOptionCheckBoxes
 		FlowLayout scytheOptionLayout = new FlowLayout();
@@ -201,7 +206,8 @@ public class Gui extends JPanel implements ActionListener {
 			scytheOptionPanel.add(createCheckBox(scytheOptions.get(i)));
 		}
 		
-		
+		scynthePanel.add(scytheOptionPanel, BorderLayout.PAGE_START);
+		//pane.add(scynthePanel, BorderLayout.PAGE_START);
 		
 		//Result Tab
 
@@ -221,7 +227,7 @@ public class Gui extends JPanel implements ActionListener {
 		tabbedPane.addTab("People Info", scrollPanePeopleSearch);
 		tabbedPane.setMnemonicAt(4, KeyEvent.VK_5);
 		
-		tabbedPane.addTab("Scythe", scrollPaneScythe);
+		tabbedPane.addTab("Scythe", scynthePanel);
 		tabbedPane.setMnemonicAt(5, KeyEvent.VK_6);
 
 //		tabbedPane.addTab("Images", initImagePanel());
@@ -265,7 +271,11 @@ public class Gui extends JPanel implements ActionListener {
 		JCheckBox t;
 		t = new JCheckBox(name);
 		t.setMnemonic(KeyEvent.VK_C);
-		t.setSelected(true);
+		if(name.equalsIgnoreCase("social")){
+			t.setSelected(true);
+		}else{
+			t.setSelected(false);
+		}
 		t.setActionCommand(name.toUpperCase());
 		t.addActionListener(this);	
 		return t;
