@@ -178,7 +178,8 @@ public class Gui extends JPanel implements ActionListener {
 		//scythe
 		scytheTextArea = new JTextArea(5, 20);
 		scytheTextArea.setEditable(false);
-		//TODO sistemare le parte grafica
+		//TODO sistemare le parte grafica!!! Ricordati di generare un file diverso per ogni ricerca scythe altrimenti il nuovo 
+		//cancella il precedente
 		JScrollPane scrollPaneScythe  = new JScrollPane(scytheTextArea);
 		scrollPaneScythe.setPreferredSize(new Dimension(200, 100));
 		pane.add(scrollPaneScythe, BorderLayout.CENTER);
