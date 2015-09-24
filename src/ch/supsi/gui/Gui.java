@@ -10,12 +10,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.regex.Pattern;
 
@@ -23,6 +26,7 @@ import ch.supsi.IPRetriver;
 import ch.supsi.MailCrawler;
 import ch.supsi.PeopleSearch;
 import ch.supsi.PortScanner;
+import ch.supsi.ScytheJava;
 import ch.supsi.SiteCrawler;
 import ch.supsi.WhoIsRetriver;
 
@@ -65,6 +69,14 @@ public class Gui extends JPanel implements ActionListener {
 	private int ydim = 100;
 	private int windowsX = 850;
 	private int windowsY = 750;
+
+	private boolean scytheSocialisActive = true;
+	private boolean scytheMediaIsActive = false;
+	private boolean scytheForumsIsActive = false;
+	private boolean scytheDevelopmentIsActive = false;
+	private boolean scytheCommerceIsActive = false;
+	private boolean scytheBlogsIsActive = false;
+	private boolean scytheEmailIsActive = false;
 	
 	private void addComponentsToPane(Container pane){
 
@@ -352,8 +364,6 @@ public class Gui extends JPanel implements ActionListener {
 				picLabel.setHorizontalAlignment(JLabel.CENTER);
 				panel.add(picLabel);
 
-
-
 			} catch (IOException e) {
 				//e.printStackTrace();
 				System.err.println("problema uri immagine");
@@ -377,7 +387,20 @@ public class Gui extends JPanel implements ActionListener {
 
 		if (evt.getActionCommand() == "SEARCH") {
 			search();
-		} else if(evt.getActionCommand() == "SITE"){
+		} else if(evt.getActionCommand() == "EDITLIST"){
+			//apro la finestra con dentro le info di accountfile.txt
+			new ScytheEditGUI();
+			
+		}else if(evt.getActionCommand() == "TESTLIST"){
+			//TODO fare partire scyte in funzione delle flags
+			scytheSearch();
+			try {
+				getDataOnReultScytheFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}	else if(evt.getActionCommand() == "SITE"){
 			if(isSiteSearchActive){
 				isSiteSearchActive = false;
 			}else{
@@ -401,18 +424,103 @@ public class Gui extends JPanel implements ActionListener {
 			}else{
 				isPortScanningActive = true;
 			}
-		}else if(evt.getActionCommand() == "EDITLIST"){
-			//apro la finestra con dentro le info di accountfile.txt
-			new ScytheEditGUI();
-			
-		}else if(evt.getActionCommand() == "TESTLIST"){
-			//TODO fare partire scyte in funzione delle flags
+		}else if(evt.getActionCommand() == "SOCIAL"){
+			if(scytheSocialisActive){
+				scytheSocialisActive = false;
+			}else{
+				scytheSocialisActive = true;
+			}
+		}else if(evt.getActionCommand() == "MEDIA"){
+			if(scytheMediaIsActive){
+				scytheMediaIsActive = false;
+			}else{
+				scytheMediaIsActive = true;
+			}
+		}else if(evt.getActionCommand() == "FORUMS"){
+			if(scytheForumsIsActive){
+				scytheForumsIsActive = false;
+			}else{
+				scytheForumsIsActive = true;
+			}
+		}else if(evt.getActionCommand() == "DEVELOPMENT"){
+			if(scytheDevelopmentIsActive){
+				scytheDevelopmentIsActive = false;
+			}else{
+				scytheDevelopmentIsActive = true;
+			}
+		}else if(evt.getActionCommand() == "COMMERCE"){
+			if(scytheCommerceIsActive){
+				scytheCommerceIsActive = false;
+			}else{
+				scytheCommerceIsActive = true;
+			}
+		}else if(evt.getActionCommand() == "BLOGS"){
+			if(scytheBlogsIsActive){
+				scytheBlogsIsActive = false;
+			}else{
+				scytheBlogsIsActive = true;
+			}
+		}else if(evt.getActionCommand() == "EMAIL"){
+			if(scytheEmailIsActive){
+				scytheEmailIsActive = false;
+			}else{
+				scytheEmailIsActive = true;
+			}
 		}
-		
-		
-			
 	}
 
+	private void scytheSearch() {
+//		social media forums development "commerce blogs email");
+		ScytheJava sj = new ScytheJava();
+		if(scytheSocialisActive){
+			sj.scytheSocial();
+		}
+		if(scytheMediaIsActive){
+			sj.scytheMedia();
+		}
+		if(scytheForumsIsActive){
+			sj.scytheForums();
+		}
+		if(scytheDevelopmentIsActive){
+			sj.scytheDevelopment();
+		}
+		if(scytheCommerceIsActive){
+			sj.scytheCommerce();
+		}	
+		if(scytheBlogsIsActive){
+			sj.scytheBlogs();
+		}
+		if(scytheEmailIsActive){
+			sj.scytheEmail();
+		}
+	}
+
+
+
+	private void getDataOnReultScytheFile() throws IOException {
+		ArrayList<String> categories = new ArrayList<String>(Arrays.asList("social", "media", "forums", "development", "commerce", "blogs", "email"));
+		
+		for(int i =0; i< categories.size(); i++){
+			BufferedReader br = new BufferedReader(new FileReader("result"+categories.get(i)+".txt"));
+			// StringBuilder sb = new StringBuilder();
+			String line = br.readLine();
+			while (line != null) {
+				scytheTextArea.append(line);
+				scytheTextArea.append(System.lineSeparator());
+				line = br.readLine();
+			}
+			br.close();
+		}
+//		BufferedReader br = new BufferedReader(new FileReader("result.txt"));
+//		// StringBuilder sb = new StringBuilder();
+//		String line = br.readLine();
+//		while (line != null) {
+//			scytheTextArea.append(line);
+//			scytheTextArea.append(System.lineSeparator());
+//			line = br.readLine();
+//		}
+//		br.close();
+	}
 
 	private void search(){
 
