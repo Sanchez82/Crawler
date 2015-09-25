@@ -54,8 +54,9 @@ public class Main {
 		initScytheFile();
 		
 		
-//		PeopleSearch ps = new PeopleSearch();
-		//ps.searchLinkedin("Sascha", "Dominguez");
+		
+		PeopleSearch ps = new PeopleSearch();
+		ps.searchLinkedin("Sascha", "Dominguez");
 //		ps.searchLinkedin("Sandro", "Pedrazzini");
 //		ps.searchLocal("Sandro", "Pedrazzini");
 //		

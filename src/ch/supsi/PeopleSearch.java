@@ -15,7 +15,6 @@ public class PeopleSearch {
 
 	public ArrayList<String> searchImages(String name, String surname){
 		ArrayList<String> imageResult = new ArrayList<String>();
-
 		for(int i = 1; i < 9; i++){
 			imageResult.addAll(searchImages(name, surname, i));
 		}
@@ -111,14 +110,13 @@ public class PeopleSearch {
 		return results;
 	}
 	
-	//TODO separare bene le informazioni
 	private String getInfo(Document doc, String selector){
 
 		Elements element = doc.getElementsByClass(selector);
 		String r="";
 		for(Element link: element){
 			//System.err.println(link.text());
-			r= r+link.text()+"\t";
+			r= r+link.text()+"ÇÇ";
 		}
 		return r;
 	}
@@ -147,29 +145,46 @@ public class PeopleSearch {
 		}
 		return results;
 	}
-//TODO ricerca nei social network
-	public ArrayList<String> searchPresenceOnSocialNetwork(String name, String surname){ 
-		ArrayList<String> results = new ArrayList<String>();
-
-		String URL = "http://tel.local.ch/it/q?what="+name+"+"+surname+"&where=&rid=NlPj";
-		try{
-			Document doc = Jsoup.connect(URL).get();
-
-			//System.out.println(doc);
-
-			String details = getInfo(doc, "details-entry-title-link");
-			System.out.println("details: "+details);
-
-			String location = getInfo(doc, "address");
-			System.out.println("adress: "+location);
-
-			String tel = getInfo(doc, "number");
-			System.out.println("Tel:"+tel);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		return results;
-
+	
+	
+	/**
+	 * The purpose of this method is to regorup alle the search proposed by this class in one response
+	 * 
+	 * @param name
+	 * @param surname
+	 * @return
+	 */
+	public ArrayList<ArrayList<String>> searchAll(String name, String surname){
+		ArrayList<ArrayList<String>> allresults = new ArrayList<ArrayList<String>>();
+		
+		allresults.add(searchLocal(name, surname));
+		allresults.add(searchLinkedin(name, surname));	
+		
+		return allresults;
 	}
+////TODO ricerca nei social network
+//	public ArrayList<String> searchPresenceOnSocialNetwork(String name, String surname){ 
+//		ArrayList<String> results = new ArrayList<String>();
+//
+//		String URL = "http://tel.local.ch/it/q?what="+name+"+"+surname+"&where=&rid=NlPj";
+//		try{
+//			Document doc = Jsoup.connect(URL).get();
+//
+//			//System.out.println(doc);
+//
+//			String details = getInfo(doc, "details-entry-title-link");
+//			System.out.println("details: "+details);
+//
+//			String location = getInfo(doc, "address");
+//			System.out.println("adress: "+location);
+//
+//			String tel = getInfo(doc, "number");
+//			System.out.println("Tel:"+tel);
+//		}catch(Exception e){
+//			e.printStackTrace();
+//		}
+//		return results;
+
+//	}
 
 }

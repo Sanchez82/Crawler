@@ -77,7 +77,7 @@ public class Gui extends JPanel implements ActionListener {
 	private boolean scytheCommerceIsActive = false;
 	private boolean scytheBlogsIsActive = false;
 	private boolean scytheEmailIsActive = false;
-	
+
 	private void addComponentsToPane(Container pane){
 
 		//Header
@@ -190,35 +190,34 @@ public class Gui extends JPanel implements ActionListener {
 		JScrollPane scrollPanePeopleSearch  = new JScrollPane(peopleSearchTextArea);
 		scrollPanePeopleSearch.setPreferredSize(new Dimension(xdim, ydim));
 		pane.add(scrollPanePeopleSearch, BorderLayout.CENTER);
-		
+
 		//scythe
-		//TODO sistemare le parte grafica!!! Ricordati di generare un file diverso per ogni ricerca scythe altrimenti il nuovo 
-		//cancella il precedente
+
 		BorderLayout scyntheLayout = new BorderLayout();
 		JPanel scynthePanel = new JPanel(scyntheLayout);
-		
+
 		scytheTextArea = new JTextArea(5, 20);
 		scytheTextArea.setEditable(false);
 		JScrollPane scrollPaneScythe  = new JScrollPane(scytheTextArea);
 		scrollPaneScythe.setPreferredSize(new Dimension(xdim, ydim));
 		scynthePanel.add(scrollPaneScythe, BorderLayout.CENTER);
-		
+
 		// scytheOption
-		
+
 		// option scytheButton
-		
+
 		JButton editListButton = new JButton("edit list");
 		editListButton.setActionCommand("EDITLIST");
 		editListButton.addActionListener(this);
-		
+
 		JButton testList = new JButton("test list");
 		testList.setActionCommand("TESTLIST");
 		testList.addActionListener(this);
-		
+
 		//option checkbox
 		FlowLayout scytheOptionLayout = new FlowLayout();
 		JPanel scytheOptionPanel = new JPanel(scytheOptionLayout);
-		
+
 		ArrayList<String> scytheOptions = new ArrayList<String>();
 		scytheOptions.add("social");
 		scytheOptions.add("media");
@@ -227,55 +226,49 @@ public class Gui extends JPanel implements ActionListener {
 		scytheOptions.add("commerce");
 		scytheOptions.add("blogs");
 		scytheOptions.add("email");	
-		
+
 		JCheckBox socialCheck = new JCheckBox("social");
 		socialCheck.setMnemonic(KeyEvent.VK_C);
 		socialCheck.setSelected(true);
 		socialCheck.setActionCommand("SOCIAL");
 		socialCheck.addActionListener(this);
-		
+
 		JCheckBox mediaCheck = new JCheckBox("media");
 		mediaCheck.setMnemonic(KeyEvent.VK_C);
 		mediaCheck.setSelected(false);
 		mediaCheck.setActionCommand("MEDIA");
 		mediaCheck.addActionListener(this);
-		
+
 		JCheckBox forumsCheck = new JCheckBox("forums");
 		forumsCheck.setMnemonic(KeyEvent.VK_C);
 		forumsCheck.setSelected(false);
 		forumsCheck.setActionCommand("FORUM");
 		forumsCheck.addActionListener(this);
-		
+
 		JCheckBox developmentCheck = new JCheckBox("development");
 		developmentCheck.setMnemonic(KeyEvent.VK_C);
 		developmentCheck.setSelected(false);
 		developmentCheck.setActionCommand("DEVELOPMENT");
 		developmentCheck.addActionListener(this);
-		
+
 		JCheckBox commerceCheck = new JCheckBox("commerce");
 		commerceCheck.setMnemonic(KeyEvent.VK_C);
 		commerceCheck.setSelected(false);
 		commerceCheck.setActionCommand("COMMERCE");
 		commerceCheck.addActionListener(this);
-		
+
 		JCheckBox blogsCheck = new JCheckBox("blogs");
 		blogsCheck.setMnemonic(KeyEvent.VK_C);
 		blogsCheck.setSelected(false);
 		blogsCheck.setActionCommand("BLOGS");
 		blogsCheck.addActionListener(this);
-		
+
 		JCheckBox scytheemailCheck = new JCheckBox("email");
 		scytheemailCheck.setMnemonic(KeyEvent.VK_C);
 		scytheemailCheck.setSelected(false);
 		scytheemailCheck.setActionCommand("EMAILSCYTHE");
 		scytheemailCheck.addActionListener(this);
-		
-		//TODO
-		
-//		for(int i=0; i<scytheOptions.size(); i++){
-//			scytheOptionPanel.add(createCheckBox(scytheOptions.get(i)));
-//		}
-		
+
 		scytheOptionPanel.add(socialCheck);
 		scytheOptionPanel.add(mediaCheck);
 		scytheOptionPanel.add(forumsCheck);
@@ -283,11 +276,10 @@ public class Gui extends JPanel implements ActionListener {
 		scytheOptionPanel.add(commerceCheck);
 		scytheOptionPanel.add(blogsCheck);
 		scytheOptionPanel.add(scytheemailCheck);
-		
-		
+
 		scytheOptionPanel.add(editListButton);
 		scytheOptionPanel.add(testList);
-			
+
 		scynthePanel.add(scytheOptionPanel, BorderLayout.PAGE_START);	
 		//Result Tab
 
@@ -306,12 +298,12 @@ public class Gui extends JPanel implements ActionListener {
 
 		tabbedPane.addTab("People Info", scrollPanePeopleSearch);
 		tabbedPane.setMnemonicAt(4, KeyEvent.VK_5);
-		
+
 		tabbedPane.addTab("Scythe", scynthePanel);
 		tabbedPane.setMnemonicAt(5, KeyEvent.VK_6);
 
-//		tabbedPane.addTab("Images", initImagePanel());
-//		tabbedPane.setMnemonicAt(5, KeyEvent.VK_6);
+		//		tabbedPane.addTab("Images", initImagePanel());
+		//		tabbedPane.setMnemonicAt(5, KeyEvent.VK_6);
 
 
 
@@ -344,24 +336,6 @@ public class Gui extends JPanel implements ActionListener {
 		footerPanel.add(empty3, BorderLayout.LINE_START);
 		footerPanel.add(empty4, BorderLayout.LINE_END);
 	}
-
-	
-	
-	private JCheckBox createCheckBox(String name) {
-		JCheckBox t;
-		t = new JCheckBox(name);
-		t.setMnemonic(KeyEvent.VK_C);
-		if(name.equalsIgnoreCase("social")){
-			t.setSelected(true);
-		}else{
-			t.setSelected(false);
-		}
-		t.setActionCommand(name.toUpperCase());
-		t.addActionListener(this);	
-		return t;
-	}
-	
-	
 
 	private void createAndShowGUI() {
 
@@ -435,7 +409,6 @@ public class Gui extends JPanel implements ActionListener {
 		return panel;
 	}
 
-//TODO sistemare qui
 	public void actionPerformed(ActionEvent evt) {
 
 		if (evt.getActionCommand() == "SEARCH") {
@@ -519,7 +492,7 @@ public class Gui extends JPanel implements ActionListener {
 	}
 
 	private void scytheSearch() {
-//		social media forums development "commerce blogs email");
+		//		social media forums development "commerce blogs email");
 		scytheTextArea.setText("");
 		ScytheJava sj = new ScytheJava();
 		if(scytheSocialisActive){
@@ -547,7 +520,7 @@ public class Gui extends JPanel implements ActionListener {
 
 	private void getDataOnReultScytheFile() throws IOException {
 		ArrayList<String> categories = new ArrayList<String>(Arrays.asList("social", "media", "forums", "development", "commerce", "blogs", "email"));
-		
+
 		for(int i =0; i< categories.size(); i++){
 			BufferedReader br = new BufferedReader(new FileReader("result"+categories.get(i)+".txt"));
 			// StringBuilder sb = new StringBuilder();
@@ -586,6 +559,8 @@ public class Gui extends JPanel implements ActionListener {
 			}
 			if(isEmailSearchActive){
 				searchEmail();
+				//people search it works only if we have some e-mail adresses to check
+				peopleSearch();
 			}if(isWhoIsActive){
 				searchWhoIs();
 			}
@@ -593,9 +568,9 @@ public class Gui extends JPanel implements ActionListener {
 				ScanPorts();
 				System.out.println("fine");
 			}
-			peopleSearch(site);
+
 		}else{
-			peopleSearch(site);
+			personSearch(site);
 		}
 
 	}
@@ -606,51 +581,113 @@ public class Gui extends JPanel implements ActionListener {
 		portScannerTextArea.setText("");
 		peopleSearchTextArea.setText("");
 	}
+	//TODO trovare un modo intelligente di usarla
+	private void peopleSearch(){
+		PeopleSearch ps= new PeopleSearch();
+		ArrayList<String> parsedMails = parseMail();
+		for(int i =0; i< parsedMails.size(); i++){
+			String t = parsedMails.get(i);
+			String[] baseInfo = t.split(Pattern.quote("."));
 
-	//TODO
-	private void peopleSearch(String names) {
+			if(baseInfo.length>1){
+				personSearch(baseInfo[0], baseInfo[1]);
+			}
+		}
+
+		//		if(isSiteSearchActive){
+		//			ArrayList<String> parsedMails = parseMail();
+		//			for(int i =0; i< parsedMails.size(); i++){
+		//				String t = parsedMails.get(i);
+		//				String[] baseInfo = t.split(Pattern.quote("."));
+		//
+		//				if(baseInfo.length>1){
+		//					
+		//					System.out.println("\n"+baseInfo[0]+" "+ baseInfo[1]);	
+		//					ArrayList<String> localInfo = ps.searchLocal(baseInfo[0], baseInfo[1]);
+		//					ArrayList<String> linkedInInfo = ps.searchLinkedin(baseInfo[0], baseInfo[1]);
+		//					ArrayList<String> imageInfo = ps.searchImages(baseInfo[0], baseInfo[1]);
+		//					
+		//					peopleSearchTextArea.append(baseInfo[0]+" "+ baseInfo[1]+"\n");
+		//					
+		//					for(int j = 0; j< localInfo.size(); j++){
+		//						//peopleSearchTextArea.append(localInfo.get(i)+"\n");
+		//					}
+		//					for(int j = 0; j< linkedInInfo.size(); j++){
+		//						//peopleSearchTextArea.append(linkedInInfo.get(i)+"\n");
+		//					}
+		//				}
+		//			}
+		//
+		//		}
+		//		else{
+
+		//}
+
+
+
+	}
+	private void personSearch(String name, String surname) {
+		
 		PeopleSearch ps = new PeopleSearch();
-		if(isSiteSearchActive){
-			ArrayList<String> parsedMails = parseMail();
-			for(int i =0; i< parsedMails.size(); i++){
-				String t = parsedMails.get(i);
-				String[] baseInfo = t.split(Pattern.quote("."));
+		ArrayList<ArrayList<String>> all = ps.searchAll(name, surname);
 
-				if(baseInfo.length>1){
-					
-					System.out.println("\n"+baseInfo[0]+" "+ baseInfo[1]);	
-					ArrayList<String> localInfo = ps.searchLocal(baseInfo[0], baseInfo[1]);
-					ArrayList<String> linkedInInfo = ps.searchLinkedin(baseInfo[0], baseInfo[1]);
-					ArrayList<String> imageInfo = ps.searchImages(baseInfo[0], baseInfo[1]);
-					
-					peopleSearchTextArea.append(baseInfo[0]+" "+ baseInfo[1]+"\n");
-					
-					for(int j = 0; j< localInfo.size(); j++){
-						//peopleSearchTextArea.append(localInfo.get(i)+"\n");
-					}
-					for(int j = 0; j< linkedInInfo.size(); j++){
-						//peopleSearchTextArea.append(linkedInInfo.get(i)+"\n");
-					}
-				}
-			}
+		ArrayList<String> localInfo = all.get(0);
+		ArrayList<String> linkedInInfo = all.get(1);
 
+		//		ArrayList<String> localInfo = ps.searchLocal(baseInfo[0], baseInfo[1]);
+		//		ArrayList<String> linkedInInfo = ps.searchLinkedin(baseInfo[0], baseInfo[1]);
+		ArrayList<String> imageInfo = ps.searchImages(name, surname);
+
+		peopleSearchTextArea.append(name.substring(0, 1).toUpperCase() + name.substring(1)+""
+				+ " "+surname.substring(0, 1).toUpperCase()+surname.substring(1)+"\n");
+
+		peopleSearchTextArea.append("Local \n");
+		printPesrsonSearchResult(localInfo);
+
+		peopleSearchTextArea.append("Linkedin \n");
+		printPesrsonSearchResult(linkedInInfo);
+
+	}
+
+	//TODO imageInfo
+	private void personSearch(String names) {
+		String[] baseInfo = names.split(" ");
+		personSearch(baseInfo[0], baseInfo[1]);
+	}
+
+	private void printPesrsonSearchResult(ArrayList<String> infoToDisplay){
+		ArrayList<String> sorted;
+		sorted = sortInfo(infoToDisplay);
+		for(int i = 0; i< sorted.size(); i++){
+			peopleSearchTextArea.append(sorted.get(i)+"\n");
+			//			peopleSearchTextArea.append(localInfo.get(i)+"\n");
 		}
-		else{
-			String[] baseInfo = names.split(" ");
-			ArrayList<String> localInfo = ps.searchLocal(baseInfo[0], baseInfo[1]);
-			ArrayList<String> linkedInInfo = ps.searchLinkedin(baseInfo[0], baseInfo[1]);
-			ArrayList<String> imageInfo = ps.searchImages(baseInfo[0], baseInfo[1]);
+		peopleSearchTextArea.append("\n");
 
-			peopleSearchTextArea.append("Local \n");
-			for(int i = 0; i< localInfo.size(); i++){
-				peopleSearchTextArea.append(localInfo.get(i)+"\n");
+	}
+
+	//TODO controlla che tutto funzioni correttamente
+	private ArrayList<String> sortInfo(ArrayList<String> s){
+
+		ArrayList<String> result = new ArrayList<String>();
+		int maxInfoLinkedIn = 0;
+		for(int i = 0; i< s.size(); i++){
+			String line = s.get(i);
+			String[] rawLine = line.split("ÇÇ");
+			if(maxInfoLinkedIn < rawLine.length){
+				maxInfoLinkedIn = rawLine.length;
 			}
-			peopleSearchTextArea.append("\n");
-			peopleSearchTextArea.append("Linkedin \n");
-			for(int i = 0; i< linkedInInfo.size(); i++){
-				peopleSearchTextArea.append(linkedInInfo.get(i)+"\n");
+			for(int j =0; j< rawLine.length; j++){
+				if(result.size() <= j){
+					result.add(rawLine[j]);
+				}else{
+					String t = result.get(j);
+					t = t+" "+rawLine[j];
+					result.set(j,t);
+				}	
 			}
 		}
+		return result;
 	}
 
 	private ArrayList<String> parseMail() {
@@ -744,7 +781,6 @@ public class Gui extends JPanel implements ActionListener {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 		mailTextArea.setCaretPosition(mailTextArea.getDocument().getLength());	
 	}
 	private void searchSite(int deepNumber){

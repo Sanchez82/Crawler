@@ -83,7 +83,7 @@
     </display>  
   </class>  
   <association id="10">    
-    <end type="SOURCE" refId="3" navigable="false">      
+    <end type="SOURCE" refId="7" navigable="false">      
       <attribute id="11" name="db">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
@@ -107,7 +107,7 @@
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="16">    
-    <end type="SOURCE" refId="7" navigable="false">      
+    <end type="SOURCE" refId="3" navigable="false">      
       <attribute id="17" name="db">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
