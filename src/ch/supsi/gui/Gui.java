@@ -581,9 +581,8 @@ public class Gui extends JPanel implements ActionListener {
 		portScannerTextArea.setText("");
 		peopleSearchTextArea.setText("");
 	}
-	//TODO trovare un modo intelligente di usarla
+
 	private void peopleSearch(){
-		PeopleSearch ps= new PeopleSearch();
 		ArrayList<String> parsedMails = parseMail();
 		for(int i =0; i< parsedMails.size(); i++){
 			String t = parsedMails.get(i);
@@ -627,7 +626,7 @@ public class Gui extends JPanel implements ActionListener {
 
 	}
 	private void personSearch(String name, String surname) {
-		
+
 		PeopleSearch ps = new PeopleSearch();
 		ArrayList<ArrayList<String>> all = ps.searchAll(name, surname);
 
@@ -636,7 +635,7 @@ public class Gui extends JPanel implements ActionListener {
 
 		//		ArrayList<String> localInfo = ps.searchLocal(baseInfo[0], baseInfo[1]);
 		//		ArrayList<String> linkedInInfo = ps.searchLinkedin(baseInfo[0], baseInfo[1]);
-		ArrayList<String> imageInfo = ps.searchImages(name, surname);
+		//ArrayList<String> imageInfo = ps.searchImages(name, surname);
 
 		peopleSearchTextArea.append(name.substring(0, 1).toUpperCase() + name.substring(1)+""
 				+ " "+surname.substring(0, 1).toUpperCase()+surname.substring(1)+"\n");
@@ -752,7 +751,7 @@ public class Gui extends JPanel implements ActionListener {
 		}
 	}
 
-	//TODO ricerca e-mails
+	//TODO ricerca e-mails controllare che site sia un url corretto
 	private void searchEmail(){
 		String site = textField.getText();
 
@@ -783,14 +782,16 @@ public class Gui extends JPanel implements ActionListener {
 		}
 		mailTextArea.setCaretPosition(mailTextArea.getDocument().getLength());	
 	}
+	//TODO controllare validità dei siti internet
 	private void searchSite(int deepNumber){
 
 		String site = textField.getText();
+		//TODO controlURLvalidity(site);
 
 		try {
 			SiteCrawler siteCrawler = new SiteCrawler();
-			siteCrawler.setRecursiveOn(deepNumber);
-			siteCrawler.processPage(site,time);
+			//siteCrawler.setRecursiveOn(deepNumber);
+			siteCrawler.processPage(site,time,deepNumber);
 
 		} catch (SQLException | IOException e) {
 			e.printStackTrace();
@@ -808,6 +809,7 @@ public class Gui extends JPanel implements ActionListener {
 		}
 		siteTextArea.setCaretPosition(siteTextArea.getDocument().getLength());
 		System.out.println("search finished");
+
 	}
 
 	public Gui(String URL){

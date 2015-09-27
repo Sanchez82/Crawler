@@ -1,7 +1,6 @@
 package ch.supsi;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -90,6 +89,7 @@ public class MailCrawler {
 			}
 		} catch (IOException | SQLException | IllegalArgumentException e) {
 			// TODO Auto-generated catch block
+			System.err.println(URL);
 			e.printStackTrace();
 		}
 

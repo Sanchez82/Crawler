@@ -8,8 +8,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-import javax.swing.JTextArea;
-
 public class PortScanner {
 
 	String OpenPorts = "";

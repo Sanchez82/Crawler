@@ -1,10 +1,8 @@
 package ch.supsi;
 import java.io.IOException;
 import java.net.SocketException;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -128,6 +126,8 @@ public class WhoIsRetriver {
 			whois.disconnect();
 
 			// get the google.com whois server - whois.markmonitor.com
+			
+			@SuppressWarnings("unused")
 			String whoisServerUrl = getWhoisServer(whoisData1);
 			//			if (!whoisServerUrl.equals("")) {
 			//
@@ -160,6 +160,8 @@ public class WhoIsRetriver {
 	}
 
 	//Parser di Whois 
+	
+
 	private String getWhoisServer(String whois) {
 
 		String result = "";

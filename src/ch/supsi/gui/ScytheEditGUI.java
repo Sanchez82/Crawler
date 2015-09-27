@@ -30,7 +30,6 @@ public class ScytheEditGUI extends JFrame implements ActionListener{
 	private JTextArea textArea;
 	private int xdim = 200;
 	private int ydim = 100;
-	private String newline = "\n";
 
 	public ScytheEditGUI(){
 		super("Account.txt");
