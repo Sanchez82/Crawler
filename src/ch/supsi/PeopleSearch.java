@@ -87,7 +87,7 @@ public class PeopleSearch {
 
 			//System.out.println(doc);
 			System.out.println("LinkedIn");
-			
+
 			String job = getInfo(doc, "title");
 			results.add(job);
 			System.out.println("job: "+job);
@@ -109,7 +109,7 @@ public class PeopleSearch {
 		}
 		return results;
 	}
-	
+
 	private String getInfo(Document doc, String selector){
 
 		Elements element = doc.getElementsByClass(selector);
@@ -120,7 +120,7 @@ public class PeopleSearch {
 		}
 		return r;
 	}
-	
+
 	public ArrayList<String> searchLocal(String name, String surname){
 		ArrayList<String> results = new ArrayList<String>();
 		String URL = "http://tel.local.ch/it/q?what="+name+"+"+surname+"&where=&rid=NlPj";
@@ -136,7 +136,7 @@ public class PeopleSearch {
 			String location = getInfo(doc, "address");
 			results.add(location);
 			System.out.println("adress: "+location);
-			
+
 			String tel = getInfo(doc, "number");
 			results.add(tel);
 			System.out.println("Tel:"+tel);
@@ -145,8 +145,8 @@ public class PeopleSearch {
 		}
 		return results;
 	}
-	
-	
+
+
 	/**
 	 * The purpose of this method is to regorup alle the search proposed by this class in one response
 	 * 
@@ -156,35 +156,57 @@ public class PeopleSearch {
 	 */
 	public ArrayList<ArrayList<String>> searchAll(String name, String surname){
 		ArrayList<ArrayList<String>> allresults = new ArrayList<ArrayList<String>>();
-		
+
 		allresults.add(searchLocal(name, surname));
 		allresults.add(searchLinkedin(name, surname));	
-		
+
 		return allresults;
 	}
-////TODO ricerca nei social network
-//	public ArrayList<String> searchPresenceOnSocialNetwork(String name, String surname){ 
-//		ArrayList<String> results = new ArrayList<String>();
-//
-//		String URL = "http://tel.local.ch/it/q?what="+name+"+"+surname+"&where=&rid=NlPj";
-//		try{
-//			Document doc = Jsoup.connect(URL).get();
-//
-//			//System.out.println(doc);
-//
-//			String details = getInfo(doc, "details-entry-title-link");
-//			System.out.println("details: "+details);
-//
-//			String location = getInfo(doc, "address");
-//			System.out.println("adress: "+location);
-//
-//			String tel = getInfo(doc, "number");
-//			System.out.println("Tel:"+tel);
-//		}catch(Exception e){
-//			e.printStackTrace();
-//		}
-//		return results;
 
-//	}
+	public ArrayList<String> searchGoogle(String name, String surname){
+		ArrayList<String> results = new ArrayList<String>();
+
+		//		String URL = "http://tel.local.ch/it/q?what="+name+"+"+surname+"&where=&rid=NlPj";
+		String URL = "https://www.google.ch/?gws_rd=ssl#q="+name+"+"+surname+"";
+		try{
+			Document doc = Jsoup.connect(URL).get();
+			Elements sites = doc.select("a[href]");
+
+			for(Element link: sites){
+				if(link.attr("href").contains("http")){
+					results.add(link.attr("href"));
+				}
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+
+		return results;
+
+	}
+	////TODO ricerca nei social network
+	//	public ArrayList<String> searchPresenceOnSocialNetwork(String name, String surname){ 
+	//		ArrayList<String> results = new ArrayList<String>();
+	//
+	//		String URL = "http://tel.local.ch/it/q?what="+name+"+"+surname+"&where=&rid=NlPj";
+	//		try{
+	//			Document doc = Jsoup.connect(URL).get();
+	//
+	//			//System.out.println(doc);
+	//
+	//			String details = getInfo(doc, "details-entry-title-link");
+	//			System.out.println("details: "+details);
+	//
+	//			String location = getInfo(doc, "address");
+	//			System.out.println("adress: "+location);
+	//
+	//			String tel = getInfo(doc, "number");
+	//			System.out.println("Tel:"+tel);
+	//		}catch(Exception e){
+	//			e.printStackTrace();
+	//		}
+	//		return results;
+
+	//	}
 
 }

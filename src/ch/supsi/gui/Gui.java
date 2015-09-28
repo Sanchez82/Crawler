@@ -1,5 +1,6 @@
 package ch.supsi.gui;
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -40,6 +41,11 @@ import ch.supsi.Main;
 public class Gui extends JPanel implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
+	private int xdim = 200;
+	private int ydim = 100;
+	private int windowsX = 850;
+	private int windowsY = 750;
+	private int defalutDeepSerach = 20;
 
 	//Time started the seach for DB 
 	private	Calendar cal;
@@ -52,6 +58,9 @@ public class Gui extends JPanel implements ActionListener {
 	private JTextArea whoIsTextArea;
 	private JTextArea portScannerTextArea;
 	private JTextArea peopleSearchTextArea;
+	private JTextArea scytheTextArea;
+	private JTextArea internetSearchTextArea;
+
 
 	private JButton button;
 
@@ -64,12 +73,6 @@ public class Gui extends JPanel implements ActionListener {
 	private String time;
 	private ArrayList<String> mails;
 
-	private JTextArea scytheTextArea;
-	private int xdim = 200;
-	private int ydim = 100;
-	private int windowsX = 850;
-	private int windowsY = 750;
-
 	private boolean scytheSocialisActive = true;
 	private boolean scytheMediaIsActive = false;
 	private boolean scytheForumsIsActive = false;
@@ -77,6 +80,7 @@ public class Gui extends JPanel implements ActionListener {
 	private boolean scytheCommerceIsActive = false;
 	private boolean scytheBlogsIsActive = false;
 	private boolean scytheEmailIsActive = false;
+
 
 	private void addComponentsToPane(Container pane){
 
@@ -105,7 +109,7 @@ public class Gui extends JPanel implements ActionListener {
 
 		depthOfTheSearch = new JTextField(5);
 		depthOfTheSearch.addActionListener(this);
-		depthOfTheSearch.setText("100");
+		depthOfTheSearch.setText(""+defalutDeepSerach);
 		searchPanel.add(depthOfTheSearch);
 
 		button = new JButton("Search");
@@ -184,12 +188,22 @@ public class Gui extends JPanel implements ActionListener {
 		scrolloPaneportScanner.setPreferredSize(new Dimension(xdim, ydim));
 		pane.add(scrolloPaneportScanner, BorderLayout.CENTER);
 
-		//port PeopleSearch
+		//PeopleSearch
 		peopleSearchTextArea = new JTextArea(5, 20);
 		peopleSearchTextArea.setEditable(false);
 		JScrollPane scrollPanePeopleSearch  = new JScrollPane(peopleSearchTextArea);
 		scrollPanePeopleSearch.setPreferredSize(new Dimension(xdim, ydim));
 		pane.add(scrollPanePeopleSearch, BorderLayout.CENTER);
+		
+		
+		//internetPresence
+		//TODO 
+		internetSearchTextArea = new JTextArea(5, 20);
+		internetSearchTextArea.setEditable(false);
+		JScrollPane scrollInternetPresencePanel  = new JScrollPane(internetSearchTextArea);
+		scrollInternetPresencePanel.setPreferredSize(new Dimension(xdim, ydim));
+		pane.add(scrollInternetPresencePanel, BorderLayout.CENTER);
+		
 
 		//scythe
 
@@ -298,9 +312,12 @@ public class Gui extends JPanel implements ActionListener {
 
 		tabbedPane.addTab("People Info", scrollPanePeopleSearch);
 		tabbedPane.setMnemonicAt(4, KeyEvent.VK_5);
+		
+		tabbedPane.addTab("InternetPresence", scrollInternetPresencePanel);
+		tabbedPane.setMnemonicAt(5, KeyEvent.VK_6);
 
 		tabbedPane.addTab("Scythe", scynthePanel);
-		tabbedPane.setMnemonicAt(5, KeyEvent.VK_6);
+		tabbedPane.setMnemonicAt(6, KeyEvent.VK_7);
 
 		//		tabbedPane.addTab("Images", initImagePanel());
 		//		tabbedPane.setMnemonicAt(5, KeyEvent.VK_6);
@@ -546,13 +563,14 @@ public class Gui extends JPanel implements ActionListener {
 		if(site.contains("http")){
 			IPRetriver ipr = new IPRetriver();
 			ipr.getIP(site);
-
+			
+			//try to get an error if the dept of the search is not a number
 			if(isSiteSearchActive){
-				int nrSearch = 100;
+				int nrSearch = defalutDeepSerach;
 				try{
 					nrSearch = Integer.parseInt(depthOfTheSearch.getText());
 				}catch(Exception e){
-					nrSearch = 100;
+					nrSearch = defalutDeepSerach;
 				}
 
 				searchSite(nrSearch);
@@ -621,60 +639,65 @@ public class Gui extends JPanel implements ActionListener {
 		//		else{
 
 		//}
-
-
-
 	}
+	//TODO internet seach
 	private void personSearch(String name, String surname) {
 
 		PeopleSearch ps = new PeopleSearch();
 		ArrayList<ArrayList<String>> all = ps.searchAll(name, surname);
+		
+		ArrayList<String> googleList = ps.searchGoogle(name, surname);
 
 		ArrayList<String> localInfo = all.get(0);
 		ArrayList<String> linkedInInfo = all.get(1);
 
-		//		ArrayList<String> localInfo = ps.searchLocal(baseInfo[0], baseInfo[1]);
-		//		ArrayList<String> linkedInInfo = ps.searchLinkedin(baseInfo[0], baseInfo[1]);
 		//ArrayList<String> imageInfo = ps.searchImages(name, surname);
 
 		peopleSearchTextArea.append(name.substring(0, 1).toUpperCase() + name.substring(1)+""
 				+ " "+surname.substring(0, 1).toUpperCase()+surname.substring(1)+"\n");
 
 		peopleSearchTextArea.append("Local \n");
-		printPesrsonSearchResult(localInfo);
+		printPersonSearchResult(localInfo);
 
 		peopleSearchTextArea.append("Linkedin \n");
-		printPesrsonSearchResult(linkedInInfo);
-
+		printPersonSearchResult(linkedInInfo);
+		
+		internetSearchTextArea.append(name+" "+surname+"\n");
+		for(int i =0; i< googleList.size(); i++){
+			internetSearchTextArea.append(googleList.get(i)+"\n");
+		}
+		
 	}
 
-	//TODO imageInfo
 	private void personSearch(String names) {
 		String[] baseInfo = names.split(" ");
 		personSearch(baseInfo[0], baseInfo[1]);
 	}
 
-	private void printPesrsonSearchResult(ArrayList<String> infoToDisplay){
+	private void printPersonSearchResult(ArrayList<String> infoToDisplay){
 		ArrayList<String> sorted;
 		sorted = sortInfo(infoToDisplay);
 		for(int i = 0; i< sorted.size(); i++){
 			peopleSearchTextArea.append(sorted.get(i)+"\n");
-			//			peopleSearchTextArea.append(localInfo.get(i)+"\n");
 		}
 		peopleSearchTextArea.append("\n");
-
 	}
 
-	//TODO controlla che tutto funzioni correttamente
+	/**
+	 * It sorts the array list in order to display the results
+	 * 
+	 * @param s
+	 * @return
+	 */
 	private ArrayList<String> sortInfo(ArrayList<String> s){
 
 		ArrayList<String> result = new ArrayList<String>();
-		int maxInfoLinkedIn = 0;
+		int maxInfo = 0;
 		for(int i = 0; i< s.size(); i++){
 			String line = s.get(i);
 			String[] rawLine = line.split("ÇÇ");
-			if(maxInfoLinkedIn < rawLine.length){
-				maxInfoLinkedIn = rawLine.length;
+			if(maxInfo < rawLine.length){
+				maxInfo = rawLine.length;
 			}
 			for(int j =0; j< rawLine.length; j++){
 				if(result.size() <= j){
@@ -688,7 +711,8 @@ public class Gui extends JPanel implements ActionListener {
 		}
 		return result;
 	}
-
+	
+//TODO sistemare il parsing delle mails qui in  pratica prendo in considerazione solo una parte delle mails
 	private ArrayList<String> parseMail() {
 		ArrayList<String> pm = new ArrayList<String>();
 		for(int i = 0; i < mails.size(); i++){
@@ -702,6 +726,9 @@ public class Gui extends JPanel implements ActionListener {
 		return pm;
 	}
 
+	/**
+	 * This method select the most view IP adress and execute the who is algoritm
+	 */
 	private void ScanPorts() {
 		try {
 			String sql = "SELECT fkIp FROM Record where dateSearch like '"+time+"'"

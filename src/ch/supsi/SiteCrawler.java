@@ -39,7 +39,7 @@ public class SiteCrawler {
 
 	public void processPage(String URL, String searchTime) throws SQLException, IOException{
 		boolean isNotToMaxSites = true;
-		//TODO impostare controllo
+		//URL validity check
 		boolean validURL= isValidURL(URL);
 
 		//check if the given URL is already in database
