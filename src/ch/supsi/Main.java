@@ -52,23 +52,25 @@ public class Main {
 
 		new Gui(site);
 		initScytheFile();
-		
-		
-		
-		PeopleSearch ps = new PeopleSearch();
-		ps.searchLinkedin("Sascha", "Dominguez");
-//		ps.searchLinkedin("Sandro", "Pedrazzini");
-//		ps.searchLocal("Sandro", "Pedrazzini");
-//		
+
+		WebSearch ws = new WebSearch();
+		ws.googleSearch();
+
+
+		//		PeopleSearch ps = new PeopleSearch();
+		//		ps.searchLinkedin("Sascha", "Dominguez");
+		//		ps.searchLinkedin("Sandro", "Pedrazzini");
+		//		ps.searchLocal("Sandro", "Pedrazzini");
+		//		
 		//new WhoIsRetriver("www.google.ch");
-//		http://www.fernfachhochschule.ch/ffhs
-//			http://www.teatrodimitri.ch/scuola/?lang=en
-//			http://www.swissuniversities.ch
-//		
-		
-		
-//		WhoIsRetriver DrWho = new WhoIsRetriver();
-//		DrWho.getWhois("195.176.55.36");
+		//		http://www.fernfachhochschule.ch/ffhs
+		//			http://www.teatrodimitri.ch/scuola/?lang=en
+		//			http://www.swissuniversities.ch
+		//		
+
+
+		//		WhoIsRetriver DrWho = new WhoIsRetriver();
+		//		DrWho.getWhois("195.176.55.36");
 		//System.out.println(DrWho.getWhoisInternic("mkyong.com"));
 
 
